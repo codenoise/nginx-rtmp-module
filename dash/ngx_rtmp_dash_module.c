@@ -262,7 +262,7 @@ ngx_rtmp_dash_write_playlist(ngx_rtmp_session_t *s)
     "    availabilityEndTime=\"%s\"\n"                                         \
     "    minimumUpdatePeriod=\"PT%uiS\"\n"                                     \
     "    minBufferTime=\"PT%uiS\"\n"                                           \
-    "    timeShiftBufferDepth=\"PT0H0M0.00S\"\n"                               \
+    "    timeShiftBufferDepth=\"PT0H0M0.00S\"\n"                              \
     "    suggestedPresentationDelay=\"PT%uiS\"\n"                              \
     "    profiles=\"urn:hbbtv:dash:profile:isoff-live:2012,"                   \
                    "urn:mpeg:dash:profile:isoff-live:2011\"\n"                 \
@@ -341,8 +341,9 @@ ngx_rtmp_dash_write_playlist(ngx_rtmp_session_t *s)
     "  </Period>\n"                                                            \
     "</MPD>\n"
 
-    ngx_libc_localtime(ctx->start_time.sec +
-                       ngx_rtmp_dash_get_frag(s, 0)->timestamp / 1000, &tm);
+    ngx_libc_localtime(ctx->start_time.sec, &tm);
+    // ngx_libc_localtime(ctx->start_time.sec +
+    //                    ngx_rtmp_dash_get_frag(s, 0)->timestamp / 1000, &tm);
 
     *ngx_sprintf(start_time, "%4d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",
                  tm.tm_year + 1900, tm.tm_mon + 1,
